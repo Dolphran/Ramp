@@ -1,6 +1,6 @@
 """
 This script is for calculating and displaying dimensions useful for constructing a parabolic ramp.
-The script will take as input any two of the following for values defining the ramp
+The script will take as input any two of the following four values defining the ramp
 * The horizontal length of the ramp
 * The height of the ramp
 * The exit angle of the ramp
@@ -285,6 +285,11 @@ if not all(arg is None or arg > 0 for arg in [exit_angle, ramp_length, length, h
     parser.print_help()
     exit(1)
 
+if exit_angle and exit_angle >= 90:
+    print("Error: Exit angle must be less than 90.")
+    parser.print_help()
+    exit(1)
+
 if fraction and decimal:
     print("Error: -f and -d cannot both be specified.")
     parser.print_help()
@@ -295,11 +300,10 @@ if fraction is not None and fraction not in VALID_FRACTIONS:
     parser.print_help()
     exit(1)
 
-if exit_angle and exit_angle >= 90:
-    print("Error: Exit angle must be less than 90.")
-    parser.print_help()
-    exit(1)
-
+# 'frac' is the var we will pass to the 'nearest_fraction' method when printing values
+# if -fraction (-f) is specified on the command line it is stored in 'frac'
+# if instead -decimal (-d) is specified, the negative of that value is stored in 'frac'
+# if neither is specified, frac is 1, meaning print values rounded to whole numbers
 if not fraction and not decimal:
     frac = 1
 elif not fraction :
@@ -307,20 +311,12 @@ elif not fraction :
 else :
     frac = fraction
 
-if not coordinate_list_spacing:
-    coordinate_list_spacing = 4
-
-"""
-print("Exit Angle:", exit_angle)
-print("Ramp Surface Length:", ramp_length)
-print("Length:", length)
-print("Height:", height)
-print("Fraction:", fraction)
-print("Decimal:", decimal)
-print("Coordinate List Interval:", coordinate_list_spacing)
-"""
+# calculate the ramp values based on the command line arguments
 exit_angle, ramp_length, length, height, scale_factor = calculate_unknowns(exit_angle, ramp_length, length, height, True, frac)
 
-test_ramp_values(exit_angle, ramp_length, length, height)
+test_ramp_values(exit_angle, ramp_length, length, height) # validation that the code is working as expected 
+
+if not coordinate_list_spacing:
+    coordinate_list_spacing = ramp_length / 12
 
 print_ramp_points(ramp_length, scale_factor, coordinate_list_spacing, frac)
