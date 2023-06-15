@@ -51,6 +51,7 @@ So there are really four different values we may want to take into consideration
 * The height of the ramp
 * The exit angle of the ramp
 * The length of the curved surface of the ramp
+
 If we define ANY TWO of the above values, we can determine exactly the values of the other two.
 And by defintion we then know the scale factor of that particular ramp.
 As described earlier, we can then use the scale factor to easily list the height of the ramp
