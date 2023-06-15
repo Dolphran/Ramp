@@ -2,7 +2,7 @@
 Calculations for constructing a parabolic ramp. (as for RC cars)
 
 This script is for calculating and displaying dimensions useful for constructing a parabolic ramp.
-The script will take as input any two of the following for values defining the ramp
+The script will take as input any two of the following four values defining the ramp
 * The horizontal length of the ramp
 * The height of the ramp
 * The exit angle of the ramp
